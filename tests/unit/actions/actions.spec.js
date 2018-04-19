@@ -9,7 +9,7 @@ import * as MutationTypes from '../../../src/mutation-types'
 import TickerSuccessRepsonse from '../data/coinmarketcap-ticker-response.json'
 
 describe("Actions", function() {
-  describe.only("#updateCoins", function() {
+  describe("#updateCoins", function() {
 
     describe("coinmarketcap.com available", function () {
       beforeEach(function () {

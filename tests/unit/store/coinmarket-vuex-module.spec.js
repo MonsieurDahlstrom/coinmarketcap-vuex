@@ -22,7 +22,7 @@ describe("CoinmarketVuexModule", function() {
   })
   describe("namespaced getters", function () {
     let store = new Vuex.Store({state: {}, modules: {coinmarketcap: module}})
-    it('has last updated', () => expect(store.getters['coinmarketcap/updatedAt']()).to.equalTime( new Date(0)) )
+    it('has last updated', () => expect(store.getters['coinmarketcap/allCoinsUpdated']()).to.equalTime( new Date(0)) )
     it('has valuations', () => expect(store.getters['coinmarketcap/valuationsForFiat']()).to.be.an('array') )
     it('has valuations', () => expect(store.getters['coinmarketcap/valuationsForTradingPair']()).to.be.an('array') )
 

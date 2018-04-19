@@ -4,7 +4,8 @@ const getters = {
       return state.isLoading
     },
     allCoinsUpdated: (state, getters, rootState) => (currency="USD") => {
-      return state.lastFetchedUpdateCoins[currency.toUpperCase()]
+      let lastUpdatedAt = state.lastFetchedUpdateCoins[currency.toUpperCase()]
+      return lastUpdatedAt != undefined ? lastUpdatedAt : new Date(0)
     },
     valuationsForFiat: (state,getters) => (fiatCurrencySymbol) => {
       return state.valuations.filter( valuation => valuation.fiatCurrencySymbol === fiatCurrencySymbol)
