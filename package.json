@@ -15,14 +15,19 @@
     "test:unit": "mocha --require babel-core/register tests/unit/**/*.spec.js --reporter spec"
   },
   "dependencies": {
-    "coinmarketcap": "^0.2.0"
+    "coinmarketcap": "^0.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "vue": "^2.5.16",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
+    "chai-datetime": "^1.5.0",
     "eslint": "^4.18.1",
+    "fetch-mock": "^6.3.0",
     "mocha": "^5.0.1",
     "sinon": "^4.3.0"
   }

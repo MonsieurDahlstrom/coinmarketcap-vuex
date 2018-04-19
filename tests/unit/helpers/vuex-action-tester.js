@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 
 export default class VuexActionTester {
-  constructor(action, payload, mutations, dispatches, done) {
+  constructor(action, payload, getters, mutations, dispatches, done) {
     this.action = action
     this.payload = payload
     this.state = {}
@@ -10,6 +10,7 @@ export default class VuexActionTester {
     this.dispatchesCount = 0
     this.dispatches = dispatches
     this.done = done
+    this.getters = getters
   }
 
   async run () {
@@ -17,8 +18,9 @@ export default class VuexActionTester {
     const  commit = this.commit.bind(this)
     const state = this.state
     const error = undefined
+    const getters = this.getters
     try {
-      await this.action({state,dispatch,commit}, this.payload)
+      await this.action({getters, state, dispatch, commit}, this.payload)
       expect(this.mutationsCount).to.equal(this.mutations.length)
       expect(this.dispatchesCount).to.equal(this.dispatches.length)
       this.done()
@@ -29,11 +31,11 @@ export default class VuexActionTester {
 
   commit (type,payload) {
     if(this.mutations.length === 0) {
-      this.done(new Error('Expected no mutations'))
+      throw new Error('Expected no mutations')
     }
     const mutation = this.mutations[this.mutationsCount]
     if(mutation === undefined) {
-      this.done(new Error('Received more mutations then expected'))
+      throw new Error('Received more mutations then expected')
     }
     expect(mutation.type).to.equal(type)
     expect(mutation.validation(payload)).to.not.throw
@@ -42,11 +44,11 @@ export default class VuexActionTester {
 
   dispatch (type,payload) {
     if(this.dispatches.length === 0) {
-      this.done(new Error('Expected no dispatches'))
+      throw new Error('Expected no dispatches')
     }
     const dispatch = this.dispatches[this.dispatchesCount]
     if(dispatch === undefined) {
-      this.done(new Error('Received more dispatches then expected'))
+      throw new Error('Received more dispatches then expected')
     }
     expect(dispatch.type).to.equal(type)
     expect(dispatch.validation(payload)).to.not.throw
