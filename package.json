@@ -6,7 +6,7 @@
   "repository": "https://github.com/MonsieurDahlstrom/coinmarketcap-vuex.git",
   "author": "Monsiuer Dahlstrom ltd",
   "license": "BSD",
-  "private": true,
+  "private": false,
   "scripts": {
     "lint": "eslint src tests/unit",
     "build": "babel src --out-dir dist",
