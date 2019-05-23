@@ -1,5 +1,7 @@
 import 'babel-polyfill'
 
+import * as coinmarketcap from 'coinmarketcap'
+
 import {expect} from 'chai'
 var fetchMock = require('fetch-mock');
 
@@ -11,6 +13,23 @@ import TickerSuccessRepsonse from '../data/coinmarketcap-ticker-response.json'
 describe("Actions", function() {
   describe("#updateCoins", function() {
 
+    describe("coinmarketcap.com live test", function (done) {
+      it("no conversion", async function() {
+        let expectedResult = await coinmarketcap.ticker({currency: 'USD'})
+        let options = {}
+        let getters = {allCoinsUpdated: () => new Date(0) }
+
+        let mutations = new Array()
+        mutations.push( {type: MutationTypes.TOGGLE_LOADING, validation: function () {}} )
+        for(let result of expectedResult) {
+          mutations.push( {type: MutationTypes.ADD_CURRENCY_VALUATION, validation: function () {} } )
+        }
+        mutations.push( {type: MutationTypes.SET_LAST_FETCH_UPDATE_COINS, validation:  (payload) => expect(payload.currency).to.equal("USD")} )
+        mutations.push( {type: MutationTypes.TOGGLE_LOADING, validation: function () {}} )
+        var test = new VuexActionTester(Actions.updateCoins, options, getters, mutations, [], (err) => err)
+        test.run()
+      })
+    })
     describe("coinmarketcap.com available", function () {
       beforeEach(function () {
         fetchMock.mock('*', TickerSuccessRepsonse)
@@ -97,7 +116,7 @@ describe("Actions", function() {
         })
       })
     })
-    
+
     describe("coinmarketcap.com unavailable", function () {
       beforeEach(function () {
         fetchMock.mock('*', {body: [] , status: 404})
