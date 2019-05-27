@@ -12,7 +12,8 @@
     "build": "babel src --out-dir dist",
     "prepublish": "yarn run build",
     "test": "yarn run lint && yarn run test:unit",
-    "test:unit": "mocha --require babel-core/register tests/unit/**/*.spec.js --reporter spec"
+    "test:unit": "mocha --require babel-core/register tests/unit/**/*.spec.js --reporter spec --grep e2e --invert",
+    "test:e2e": "mocha --require babel-core/register tests/unit/**/*.spec.js --reporter spec --grep e2e"
   },
   "dependencies": {
     "coinmarketcap": "^0.2.0",
@@ -22,13 +23,13 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^10.0.1",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "chai-datetime": "^1.5.0",
-    "eslint": "^4.18.1",
-    "fetch-mock": "^6.3.0",
-    "mocha": "^5.0.1",
-    "sinon": "^4.3.0"
+    "eslint": "^5.16.0",
+    "fetch-mock": "^7.3.3",
+    "mocha": "^6.1.4",
+    "sinon": "^7.3.2"
   }
 }

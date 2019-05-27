@@ -1,25 +1,23 @@
 
 const getters = {
-    loading: (state, getters, rootState) => () => {
-      return state.isLoading
-    },
-    allCoinsUpdated: (state, getters, rootState) => (currency="USD") => {
-      let lastUpdatedAt = state.lastFetchedUpdateCoins[currency.toUpperCase()]
-      return lastUpdatedAt != undefined ? lastUpdatedAt : new Date(0)
-    },
-    valuationsForFiat: (state,getters) => (fiatCurrencySymbol) => {
-      return state.valuations.filter( valuation => valuation.fiatCurrencySymbol === fiatCurrencySymbol)
-    },
-    valuationsForCrytocurrency: (state,getters) => (crytocurrencySymbol) => {
-      return state.valuations.filter( valuation => valuation.crytocurrencySymbol === crytocurrencySymbol)
-    },
-    latestValuationForCryptocurrency: (state, getters, rootState) => (crytocurrencySymbol) => {
-      let valuations =  state.valuations.filter( valuation => valuation.symbol === crytocurrencySymbol.toUpperCase())
-      let valuation = valuations.reduce( (sum, valuation) => valuation['last_updated'] > sum['last_updated'] ? valuation: sum)
-    },
-    valuationsForTradingPair: (state, getters) => (crytocurrencySymbol,fiatCurrencySymbol) => {
-      return getters.valuationsForFiat(fiatCurrencySymbol).filter( valuation => valuation.crytocurrencySymbol === crytocurrencySymbol)
-    }
+  crytocurrenciesUpdatedAt: (state, getters, rootState) => (currency="USD") => {
+    let lastUpdatedAt = state.lastFetchedUpdateCoins[currency.toUpperCase()]
+    return lastUpdatedAt != undefined ? lastUpdatedAt : new Date(0)
+  },
+  fiatValuations: (state,getters) => (fiatCurrencySymbol="USD") => {
+    return state.valuations.filter( valuation => valuation.fiat === fiatCurrencySymbol.toUpperCase())
+  },
+  cryptocurrencyValuations: (state,getters) => (cryptocurrencySymbol="BTC") => {
+    return state.valuations.filter( valuation => valuation.crypto === cryptocurrencySymbol.toUpperCase())
+  },
+  cryptocurrencyLatestValuation: (state, getters, rootState) => (cryptocurrencySymbol="BTC") => {
+    let valuations =  state.valuations.filter( valuation => valuation.crypto === cryptocurrencySymbol.toUpperCase())
+    let valuation = valuations.reduce( (sum, valuation) => valuation.date.getTime() > sum.date.getTime() ? valuation: sum, valuations[0])
+    return valuation
+  },
+  tradingPairValuations: (state, getters) => (cryptocurrencySymbol="BTC",fiatCurrencySymbol="USD") => {
+    return state.valuations.filter( valuation => valuation.crypto === cryptocurrencySymbol.toUpperCase() && valuation.fiat === fiatCurrencySymbol.toUpperCase())
   }
-  
-  export default getters
+}
+
+export default getters
