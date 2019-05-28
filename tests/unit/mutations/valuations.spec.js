@@ -11,7 +11,7 @@ describe("Mutations", function() {
 
   let state
   beforeEach(() => {
-    state = {valuations:[], isLoading:false ,lastFetchedUpdateCoins:[]}
+    state = {valuations:[], isLoading:false ,lastFetchedUpdateCoins:{}}
   })
 
   describe("#ADD_CURRENCY_VALUATION", () => {

@@ -23,11 +23,8 @@ const mutations = {
   },
 
   [MutationTypes.SET_LAST_FETCH_UPDATE_COINS] (state,payload)  {
-    if(payload.currency) {
-      state.lastFetchedUpdateCoins[payload.currency.toUpperCase()] = payload.date
-    } else {
-      state.lastFetchedUpdateCoins["USD"] = payload.date
-    }
+    if(payload.currency && payload.date) state.lastFetchedUpdateCoins[payload.currency.toUpperCase()] = payload.date
+    else if(payload.date) state.lastFetchedUpdateCoins["USD"] = payload.date
   }
 }
 
