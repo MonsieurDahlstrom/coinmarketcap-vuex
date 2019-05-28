@@ -3,14 +3,19 @@ import * as MutationTypes from './mutation-types'
 const mutations = {
 
   [MutationTypes.ADD_CURRENCY_VALUATION] (state,payload) {
-    let index = state.indexes.findIndex( item => item === payload.index)
-    index < 0 ? state.indexes.push(payload.index) : state.indexes.splice(index,1,payload.index)
+    let index = state.valuations.findIndex( item => {
+      return item.fiat === payload.fiat && item.crypto === payload.crypto && item.date.getTime() === payload.date.getTime()
+    })
+    if(index < 0)
+      state.valuations.push(payload)
   },
 
   [MutationTypes.REMOVE_CURRENCY_VALUATION] (state,payload)  {
-    let index = state.indexes.findIndex( item => item === payload.index)
+    let index = state.valuations.findIndex( item => {
+      return item.fiat === payload.fiat && item.crypto === payload.crypto && item.date.getTime() === payload.date.getTime()
+    })
     if(index >= 0)
-      state.indexes.splice(index,1)
+      state.valuations.splice(index,1)
   },
 
   [MutationTypes.TOGGLE_LOADING] (state)  {

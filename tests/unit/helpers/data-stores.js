@@ -15,7 +15,7 @@ const Stores = {
       let fiat = "USD"
       let date = new Date( parseInt(valuationData["last_updated"]) * 1000)
       let rate = valuationData[`price_${fiat.toLowerCase()}`]
-      let valuation = {crypto: crypto, fiat: fiat, date: date, rate: rate, info:valuation}
+      let valuation = {crypto: crypto, fiat: fiat, date: date, rate: rate, info:valuationData}
       results.push(valuation)
     }
     return results
@@ -25,6 +25,14 @@ const Stores = {
     let store = new Vuex.Store({state: {}, modules: {coinmarketcap: coinmarketcapModule}})
     store.state.coinmarketcap.valuations = Stores.valuationsForUSD()
     return store
+  },
+
+  valuationForUSD() {
+    let crypto = sampleValuationsUSD[0]["symbol"].toUpperCase()
+    let fiat = "USD"
+    let date = new Date( parseInt(sampleValuationsUSD[0]["last_updated"]) * 1000)
+    let rate = sampleValuationsUSD[0][`price_${fiat.toLowerCase()}`]
+    return {crypto: crypto, fiat: fiat, date: date, rate: rate, info:sampleValuationsUSD[0]}
   }
 }
 

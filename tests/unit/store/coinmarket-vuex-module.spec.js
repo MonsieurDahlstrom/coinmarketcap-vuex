@@ -25,4 +25,14 @@ describe("CoinmarketVuexModule", function() {
     it("has mutations", () => expect(module.mutations).to.exist )
     it("registers with store", () => expect( () => { new Vuex.Store({state: {}, modules: {coinmarketcap: module}}) } ).to.not.throw())
   })
+
+  describe("live @e2e", function () {
+    it("loads valuations", async () => {
+      let store = new Vuex.Store({state: {}, modules: {coinmarketcap: module}})
+      await store.dispatch("coinmarketcap/updateCoins", {currency: "USD"} )
+      let valuations = store.getters['coinmarketcap/fiatValuations']()
+      expect(valuations).to.be.an("array")
+      expect(valuations.length).to.be.above(0)
+    })
+  })
 })
