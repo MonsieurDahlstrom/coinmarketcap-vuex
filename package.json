@@ -1,6 +1,6 @@
 {
   "name": "coinmarketcap-vuex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "vuex module for coinmarketcap",
   "main": "dist/index.js",
   "repository": "https://github.com/MonsieurDahlstrom/coinmarketcap-vuex.git",
